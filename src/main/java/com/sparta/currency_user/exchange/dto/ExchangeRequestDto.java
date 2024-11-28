@@ -10,8 +10,10 @@ import lombok.Getter;
 @Getter
 public class ExchangeRequestDto {
 
+  @NotNull(message = "유저 아이디는 필수 값입니다.")
   private Long userId;
 
+  @NotNull(message = "환율 정보 아이디는 필수 값입니다.")
   private Long currencyId;
 
   @NotNull(message = "환전 금액은 필수 값입니다.")

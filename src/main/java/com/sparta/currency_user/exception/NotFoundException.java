@@ -7,4 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class NotFoundException extends RuntimeException {
   private final ErrorCode errorCode;
+  private final String message;
 }

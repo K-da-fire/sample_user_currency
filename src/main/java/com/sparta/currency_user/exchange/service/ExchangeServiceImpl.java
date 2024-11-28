@@ -54,7 +54,18 @@ public class ExchangeServiceImpl implements ExchangeService{
   public ExchangeResponseDto save(Long userId, Long currencyId, BigDecimal amountIn) {
     User user = userService.findUserById(userId);
     Currency currency = currencyService.findCurrencyById(currencyId);
-    BigDecimal amountOut = amountIn.divide(currency.getExchangeRate(), 2, RoundingMode.HALF_UP);
+
+    BigDecimal divideRate = currency.getExchangeRate();
+    // 100단위로 고시되는 4개의 국가 예외처리
+    // 출처 : https://spib.wooribank.com/pib/Dream?withyou=CMCOM0184&utm_source=chatgpt.com
+    if("JPY".equals(currency.getCurrencyName()) ||  // 일본
+        "IDR".equals(currency.getCurrencyName()) || // 인도네시아
+        "VND".equals(currency.getCurrencyName()) || // 베트남
+        "KHR".equals(currency.getCurrencyName())    // 캄보디아
+    ) {
+      divideRate = divideRate.divide(new BigDecimal("100"));
+    }
+    BigDecimal amountOut = amountIn.divide(divideRate, currency.getRound(), RoundingMode.HALF_UP);
     Exchange exchange = new Exchange(user, currency, amountIn, amountOut, CurrencyStatus.NORMAL);
     exchangeRepository.save(exchange);
     return new ExchangeResponseDto(exchange);
@@ -67,14 +78,14 @@ public class ExchangeServiceImpl implements ExchangeService{
 
   @Override
   public List<ExchangeGroupResponseDto> getExchangesGroupByUserId(Long userId) {
-    String query = "select count(e) as count, sum(e.amountAfterExchange) as totalAmountInKrw "
+    String query = "select e.currency.currencyName as currencyName, count(e) as count, sum(e.amountAfterExchange) as totalAmountInKrw "
         + "from Exchange e "
-        + "where e.user.id = :userId "
-        + "group by e.user.id";
-    List<ExchangeGroupResponseDto> queryQuery = entityManager.createQuery(query, ExchangeGroupResponseDto.class)
+        + "where e.user.id = :userId and e.status = :status "
+        + "group by e.currency.id";
+    return entityManager.createQuery(query, ExchangeGroupResponseDto.class)
         .setParameter("userId", userId)
+        .setParameter("status", CurrencyStatus.NORMAL)
         .getResultList();
-    return queryQuery;
   }
 
   @Override
@@ -99,6 +110,6 @@ public class ExchangeServiceImpl implements ExchangeService{
 
   private Exchange findByIdOrElseThrow(Long id) {
     return exchangeRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException(NOT_FOUND_EXCHANGE));
+        .orElseThrow(() -> new NotFoundException(NOT_FOUND_EXCHANGE, NOT_FOUND_EXCHANGE.getMessage()));
   }
 }

@@ -25,8 +25,8 @@ public class ExchangeResponseDto {
   public static ExchangeResponseDto toDto(Exchange exchange) {
     return new ExchangeResponseDto(
         exchange.getUser().getName(),
-        exchange.getAmountInKrw(),
-        exchange.getAmountAfterExchange(),
+        exchange.getAmountInKrw().setScale(0, BigDecimal.ROUND_HALF_UP),
+        exchange.getAmountAfterExchange().setScale(exchange.getCurrency().getRound(), BigDecimal.ROUND_HALF_UP),
         exchange.getCurrency().getSymbol(),
         exchange.getStatus()
     );
@@ -35,9 +35,9 @@ public class ExchangeResponseDto {
   public ExchangeResponseDto(Exchange exchange) {
     this.username = exchange.getUser().getName();
     this.amountIn = exchange.getAmountInKrw();
+    //주어진 소수점에서 끊음
     this.amountOut = exchange.getAmountAfterExchange();
     this.symbol = exchange.getCurrency().getSymbol();
     this.status = exchange.getStatus();
   }
-
 }

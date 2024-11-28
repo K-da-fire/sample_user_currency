@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_USER));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_USER, NOT_FOUND_USER.getMessage()));
     }
 
     public List<UserResponseDto> findAll() {

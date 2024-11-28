@@ -26,7 +26,7 @@ public class CurrencyService {
 
     // 환전 단일 조회를 위한 메소드(Service에서 상용)
     public Currency findCurrencyById(Long id) {
-        return currencyRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_CURRENCY));
+        return currencyRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_CURRENCY, NOT_FOUND_CURRENCY.getMessage()));
     }
 
     // 환전 전체 조회

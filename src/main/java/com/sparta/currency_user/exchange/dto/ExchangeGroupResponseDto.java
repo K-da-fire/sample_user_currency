@@ -1,6 +1,5 @@
 package com.sparta.currency_user.exchange.dto;
 
-import com.sparta.currency_user.exchange.entity.Exchange;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ExchangeGroupResponseDto {
 
+  private String currencyName;
+
   private Long count;
 
   private BigDecimal totalAmountInKrw;
-
 }

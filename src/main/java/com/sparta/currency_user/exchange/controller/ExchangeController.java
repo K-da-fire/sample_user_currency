@@ -25,6 +25,7 @@ public class ExchangeController {
 
   private final ExchangeService exchangeService;
 
+  //환전 신청
   @PostMapping
   public ResponseEntity<ExchangeResponseDto> save(
       @Valid @RequestBody ExchangeRequestDto exchangeRequestDto
@@ -33,11 +34,13 @@ public class ExchangeController {
     return ResponseEntity.ok().body(exchangeResponseDto);
   }
 
+  //환전 신청 전체 조회
   @GetMapping
   public ResponseEntity<List<ExchangeResponseDto>> getExchanges(){
     return ResponseEntity.ok().body(exchangeService.getExchanges());
   }
 
+  //환전 신청 단건 조회
   @GetMapping("/users/{userId}")
   public ResponseEntity<List<ExchangeResponseDto>> getExchangesByUserId(
       @PathVariable("userId") Long userId
@@ -45,6 +48,7 @@ public class ExchangeController {
     return ResponseEntity.ok().body(exchangeService.getExchangesByUserId(userId));
   }
 
+  //환전 신청 통합 조회
   @GetMapping("/users/{userId}/group")
   public ResponseEntity<List<ExchangeGroupResponseDto>> getExchangesGroupByUserId(
       @PathVariable("userId") Long userId
@@ -52,6 +56,7 @@ public class ExchangeController {
     return ResponseEntity.ok().body(exchangeService.getExchangesGroupByUserId(userId));
   }
 
+  //환전 상태 변경
   @PatchMapping
   public ResponseEntity<ExchangeResponseDto> update(
       @Valid @RequestBody ExchangeStatusDto exchangeStatusDto
