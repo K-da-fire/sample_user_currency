@@ -26,17 +26,11 @@ public enum ErrorCode {
 
   // NotFoundException
 
-  NOT_FOUND_NEWSFEED("뉴스피드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+  NOT_FOUND_CURRENCY("환전 정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
-  NOT_FOUND_NEWSFEED_LIKE("좋아요를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+  NOT_FOUND_USER("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
-  NOT_FOUND_MEMBER("멤버를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-
-  NOT_FOUND_EMAIL("이메일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-
-  NOT_FOUND_COMMENT("댓글을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-
-  NOT_FOUND_FRIEND_REQUEST("친구신청을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+  NOT_FOUND_EXCHANGE("환전 요청을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
   // InternalServerException
   //세션이 만료되었을 때 출력하는 오류 메시지

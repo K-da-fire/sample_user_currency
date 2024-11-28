@@ -31,6 +31,8 @@ public class Currency extends BaseEntity {
 
     private String symbol;              //ex $
 
+    private Integer round;              // 소수 자리수
+
     public Currency(String currencyName, BigDecimal exchangeRate, String symbol) {
         this.currencyName = currencyName;
         this.exchangeRate = exchangeRate;

@@ -1,9 +1,12 @@
 package com.sparta.currency_user.currency.service;
 
+import static com.sparta.currency_user.exception.ErrorCode.NOT_FOUND_CURRENCY;
+
 import com.sparta.currency_user.currency.dto.CurrencyRequestDto;
 import com.sparta.currency_user.currency.entity.Currency;
 import com.sparta.currency_user.currency.dto.CurrencyResponseDto;
 import com.sparta.currency_user.currency.repository.CurrencyRepository;
+import com.sparta.currency_user.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +26,7 @@ public class CurrencyService {
 
     // 환전 단일 조회를 위한 메소드(Service에서 상용)
     public Currency findCurrencyById(Long id) {
-        return currencyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("통화를 찾을 수 없습니다."));
+        return currencyRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND_CURRENCY));
     }
 
     // 환전 전체 조회

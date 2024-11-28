@@ -39,9 +39,9 @@ public class GlobalExceptionController {
   //자바
 
   @ExceptionHandler
-  public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-    String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-    return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+  public ResponseEntity<ExceptionDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    String message = e.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
+    return new ResponseEntity<>(new ExceptionDto(HttpStatus.BAD_REQUEST.toString(), message), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(Exception.class)
